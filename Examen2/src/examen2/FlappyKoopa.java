@@ -233,6 +233,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
             bAbajo.add(new Planta(j, i+550, animBarra));  
         }
         
+        
     }
     
     
@@ -445,6 +446,9 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
        if (e.getKeyCode() == KeyEvent.VK_SPACE) {    //Presiono flecha arriba
             boton=true;
             salto.play();
+            if(gameOver){
+                reinicia();
+            }
             
        } 
        else if (e.getKeyCode() == KeyEvent.VK_P){
@@ -518,6 +522,9 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
         inicio=true;
         boton=true;
         salto.play();
+        if(gameOver){
+            reinicia();
+        }
     }
     
     /**
