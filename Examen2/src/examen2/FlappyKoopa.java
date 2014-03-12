@@ -26,6 +26,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
     private int velBarra;
     private int gravedad;
     private int contBoton;
+    private int nivel;
     //Se declaran variables tipo long
     private long tiempoActual;
     private long tiempoInicial;
@@ -47,6 +48,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
     private boolean gameOver;
     private boolean boton;
     private boolean inicio;
+    private boolean toca;
     //Se declaran variables Linked list
     private LinkedList bArriba;
     private LinkedList bAbajo;
@@ -58,10 +60,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
        
         //Se inicializan variables
         score=0;
+        toca=false;
+        nivel=1;
         velKoopaX=0;
         velKoopaY=5;
         velBarra=6;
-        gravedad=2;
+        gravedad=1;
         boton=false;
         inicio=false;
         bArriba= new LinkedList();
@@ -167,7 +171,6 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
             
                 //movimiento pajaro
                 if(boton){
-                
                     koopa.setPosY(koopa.getPosY() - (gravedad * velKoopaY));
                 } 
                 else{
@@ -190,9 +193,11 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 //Niveles
                 if(score==15){
                     velBarra=velBarra+3;
+                    nivel=2;
                 }
                 if(score==30){
                     velBarra=velBarra+6;
+                    nivel=3;
                 }
             
             }
@@ -213,9 +218,10 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
             // Colision de la pelota con los bloques
             for (int i = 0; i < space.size(); i++) {
                  espacio = (Planta) (space.get(i));
-                if (koopa.intersecta(espacio)) {
-                     score++;
-                }
+                if (koopa.intersecta(espacio)) { 
+                    toca=true;
+                    score+=1;
+                }else toca=false;
             }
             for (int i = 0; i < bArriba.size(); i++) {
                  barraArriba = (Planta) (bArriba.get(i));
@@ -226,7 +232,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
             for (int i = 0; i < bAbajo.size(); i++) {
                  barraArriba = (Planta) (bAbajo.get(i));
                 if (koopa.intersecta(barraArriba)) {
-                     gameOver=true;  
+                     gameOver=true;
                 }
             }
         }
@@ -282,6 +288,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 
             }
             g.drawString("Tu score es: " + score, 200 , 50);
+            g.drawString("Nivel " + nivel, 200 , 70);
             if(!inicio){
                 
                g.drawImage(nivel1, 450, 250, this); 
@@ -309,7 +316,6 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
        
        inicio=true; 
        if (e.getKeyCode() == KeyEvent.VK_UP) {    //Presiono flecha arriba
-                
             boton=true;
             salto.play();
        } 
