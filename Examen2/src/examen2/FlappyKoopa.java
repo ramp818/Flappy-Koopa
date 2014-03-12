@@ -9,6 +9,15 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
 
 public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseListener
 {
@@ -59,7 +68,10 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
     private LinkedList bArriba;
     private LinkedList bAbajo;
     private LinkedList space;
-    
+    // Manejo de scores
+     private Vector vec;    // Objeto vector para agregar el puntaje.
+     private String nombreArchivo;    //Nombre del archivo.
+     private String[] arr;    //Arreglo del archivo divido.
     
     
     public FlappyKoopa(){
@@ -77,9 +89,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
         gravedad=1;
         boton=false;
         inicio=false;
+        gameOver=false;
         bArriba= new LinkedList();
         bAbajo= new LinkedList();
         space= new LinkedList();
+        nombreArchivo = "Puntaje.txt";
+        vec = new Vector();
         
         //Se cargan imagenes
         
@@ -142,6 +157,85 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
         }  
    }
     
+    public void reinicia(){
+        
+        score=0;
+        toca=false;
+        nivel=1;
+        velKoopaX=0;
+        velKoopaY=5;
+        velBarra=6;
+        gravedad=1;
+        boton=false;
+        inicio=false;
+        gameOver=false;
+        bArriba= new LinkedList();
+        bAbajo= new LinkedList();
+        space= new LinkedList();
+        
+        //Se cargan imagenes
+        
+        background = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/fondo.png"));
+        ImagenPausa= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pausa1.gif"));
+        ImagenGameOver= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/GameOver1.gif"));
+        nivel1= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/inicio.gif")); 
+        
+        // Carga personaje bueno
+        Image Koopa1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k0.gif"));
+        Image Koopa2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k1.gif"));
+        Image Koopa3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k2.gif"));
+        Image Koopa4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k3.gif"));
+        Image Koopa5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k4.gif"));
+        Image Koopa6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k5.gif"));
+        Image Koopa7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k6.gif"));
+        Image Koopa8 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k7.gif"));
+        Image Koopa9 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k8.gif"));
+        
+        animKoopa= new Animacion();
+        animKoopa.sumaCuadro(Koopa1,100);
+        animKoopa.sumaCuadro(Koopa2,100);
+        animKoopa.sumaCuadro(Koopa3,100);
+        animKoopa.sumaCuadro(Koopa4,100);
+        animKoopa.sumaCuadro(Koopa5,100);
+        animKoopa.sumaCuadro(Koopa6,100);
+        animKoopa.sumaCuadro(Koopa7,100);
+        animKoopa.sumaCuadro(Koopa8,100);
+        animKoopa.sumaCuadro(Koopa9,100);
+        
+        koopa=new Pajaro(100,300,animKoopa);
+        
+        //Carga plantas
+        Image barra0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/barra.gif"));
+        animBarra = new Animacion();
+        animBarra.sumaCuadro(barra0,100);
+        
+        //Carga imagen transparente
+        Image transparente = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/espacio.gif"));
+        animEspacio = new Animacion();
+        animEspacio.sumaCuadro(transparente,100);
+        
+        //Cargan Sonidos
+        salto = new SoundClip("sounds/salto.wav");
+        
+        //Caracteristicas JFrame
+        setSize(1200,600);
+        addKeyListener(this);
+        addMouseListener(this);
+        
+        Thread th = new Thread(this);
+        //Empieza el hilo
+        th.start();
+    
+        for (int j = 600; j < 10000; j += 270){
+            int i = (int)(Math.random() * (-200) + (-50));
+            bArriba.add(new Planta(j, i, animBarra));
+            space.add(new Planta(j,i+400,animEspacio));
+            bAbajo.add(new Planta(j, i+550, animBarra));  
+        }
+        
+    }
+    
+    
    /** 
      * Metodo <I>run</I> sobrescrito de la clase <code>Thread</code>.<P>
      * En este metodo se ejecuta el hilo, es un ciclo indefinido donde se incrementa
@@ -151,7 +245,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
      */
         public void run() {
             tiempoActual = System.currentTimeMillis();
-            while (true) {
+            while (!gameOver) {
                 if (!pausa && inicio && !gameOver) {
                     checaColision();
                     actualiza();
@@ -163,6 +257,18 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
                     System.out.println("Error en " + ex.toString());
                 }   
             }
+           String nombre = JOptionPane.showInputDialog("Cual es tu nombre?");
+           JOptionPane.showMessageDialog(null, "El puntaje de " + nombre + " es: " + score, "PUNTAJE", JOptionPane.PLAIN_MESSAGE);
+                try {
+                      leeArchivo();    //lee el contenido del archivo
+                      //Agrega el contenido del nuevo puntaje al vector.
+                      vec.add(new Puntaje(nombre,score));
+                      //Graba el vector en el archivo.
+                      grabaArchivo();
+                } catch(IOException e) {
+
+                      System.out.println("Error en " + e.toString());
+                }
         }
         
        /**
@@ -339,16 +445,13 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
        if (e.getKeyCode() == KeyEvent.VK_SPACE) {    //Presiono flecha arriba
             boton=true;
             salto.play();
+            
        } 
        else if (e.getKeyCode() == KeyEvent.VK_P){
                 
             pausa=!pausa;
        }
-       else if (e.getKeyCode() == KeyEvent.VK_R){
-        FlappyKoopa juego= new FlappyKoopa();
-        juego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	juego.setVisible(true);
-       }
+ 
     }
 
     /**
@@ -425,6 +528,41 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
     public void mouseReleased(MouseEvent e){
     	
     }
+    
+    public void leeArchivo() throws IOException {
+                                                          
+                BufferedReader fileIn;
+                try {
+                        fileIn = new BufferedReader(new FileReader(nombreArchivo));
+                } catch (FileNotFoundException e){
+                        File puntos = new File(nombreArchivo);
+                        PrintWriter fileOut = new PrintWriter(puntos);
+                        fileOut.println("100,demo");
+                        fileOut.close();
+                        fileIn = new BufferedReader(new FileReader(nombreArchivo));
+                }
+                String dato = fileIn.readLine();
+                while(dato != null) {  
+                                                        
+                      arr = dato.split(",");
+                      int num = (Integer.parseInt(arr[0]));
+                      String nom = arr[1];
+                      vec.add(new Puntaje(nom,num));
+                      dato = fileIn.readLine();
+                }
+                fileIn.close();
+        }
+    public void grabaArchivo() throws IOException {
+                                                          
+                PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+                for (int i = 0; i < vec.size(); i++) {
+
+                    Puntaje x;
+                    x = (Puntaje) vec.get(i);
+                    fileOut.println(x.toString());
+                }
+                fileOut.close();
+        }
 }
 
 
