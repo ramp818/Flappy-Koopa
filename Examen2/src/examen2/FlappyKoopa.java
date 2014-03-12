@@ -115,7 +115,11 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         Thread th = new Thread(this);
         //Empieza el hilo
         th.start();
-        
+    
+        for (int j = 600; j < 2400; j += 200){
+            int i = (int)(Math.random() * (-200) + 0);
+            bArriba.add(new Planta(j, i, animBarra));
+        }  
    }
     
    /** 
@@ -231,6 +235,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
                 
                 g.drawImage(koopa.getAnimacion().getImagen(), koopa.getPosX(), koopa.getPosY(), this);
             }
+            
+            for (int i = 0; i < bArriba.size(); i++) {
+                barraArriba = (Planta) (bArriba.get(i));
+                    g.drawImage(barraArriba.getAnimacion().getImagen(), barraArriba.getPosX(), barraArriba.getPosY(), this);
+            }
+            
             if(pausa){
                 
                 g.drawImage(ImagenPausa, 450, 250, this);
