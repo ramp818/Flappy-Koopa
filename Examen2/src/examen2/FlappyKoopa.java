@@ -187,7 +187,13 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                     espacio.setPosX(espacio.getPosX() - velBarra);
   
                 }
-                
+                //Niveles
+                if(score==15){
+                    velBarra=velBarra+3;
+                }
+                if(score==30){
+                    velBarra=velBarra+6;
+                }
             
             }
            
@@ -275,7 +281,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 g.drawImage(barraAbajo.getAnimacion().getImagen(), barraAbajo.getPosX(), barraAbajo.getPosY(), this);
                 
             }
-            
+            g.drawString("Tu score es: " + score, 200 , 50);
             if(!inicio){
                 
                g.drawImage(nivel1, 450, 250, this); 
