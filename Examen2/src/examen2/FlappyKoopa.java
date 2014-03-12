@@ -32,11 +32,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
     //Se declaran variables tipo Pajaro
     private Pajaro koopa;
     //Se declaran variables tipo Planta
-    private Planta plantaArriba;
-    private Planta plantaAbajo;
+    private Planta barraArriba;
+    private Planta barraAbajo;
     //Se declaran variables tipo Animacion
     private Animacion animKoopa;
-    private Animacion animCarnivora;
+    private Animacion animBarra;
+    private Animacion animEspacio;
     //Se declaran variables tipo SoundClip
     private SoundClip musicaFondo;
     private SoundClip salto;
@@ -46,8 +47,8 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
     private boolean boton;
     private boolean inicio;
     //Se declaran variables Linked list
-    private LinkedList plantasArriba;
-    private LinkedList plantasAbajo;
+    private LinkedList bArriba;
+    private LinkedList bAbajo;
     
     
     
@@ -60,8 +61,8 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         gravedad=2;
         boton=false;
         inicio=false;
-        plantasArriba= new LinkedList();
-        plantasAbajo= new LinkedList();
+        bArriba= new LinkedList();
+        bAbajo= new LinkedList();
         
         //Se cargan imagenes
         
@@ -94,24 +95,15 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         koopa=new Pajaro(100,300,animKoopa);
         
         //Carga plantas
-        Image planta0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p0.gif"));
-        Image planta1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p1.gif"));
-        Image planta2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p2.gif"));
-        Image planta3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p3.gif"));
-        Image planta4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p4.gif"));
-        Image planta5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p5.gif"));
-        Image planta6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p6.gif"));
-        Image planta7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p7.gif"));
-        Image planta8 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p8.gif"));
-        Image planta9 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p9.gif"));
-        Image planta10 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p10.gif"));
-        Image planta11 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p11.gif"));
-        Image planta12 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p12.gif"));
-        Image planta13 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p13.gif"));
-        Image planta14 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p14.gif"));
-        Image planta15 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p15.gif"));
-        Image planta16 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p16.gif"));
-      
+        Image barra0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/barra.gif"));
+        animBarra = new Animacion();
+        animBarra.sumaCuadro(barra0,100);
+        
+        //Carga imagen transparente
+        Image transparente = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/espacio.gif"));
+        animEspacio = new Animacion();
+        animEspacio.sumaCuadro(transparente,100);
+        
         //Cargan Sonidos
         salto = new SoundClip("sounds/salto.wav");
         
