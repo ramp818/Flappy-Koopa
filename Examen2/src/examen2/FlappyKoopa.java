@@ -536,6 +536,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
     	
     }
     
+    /**
+     * Metodo que lee a informacion de un archivo y lo agrega a un vector.
+     *
+     * @throws IOException
+     */
+    
     public void leeArchivo() throws IOException {
                                                           
                 BufferedReader fileIn;
@@ -559,6 +565,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
                 }
                 fileIn.close();
         }
+    
+    /**
+     * Metodo que agrega la informacion del vector al archivo.
+     *
+     * @throws IOException
+     */
     public void grabaArchivo() throws IOException {
                                                           
                 PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
