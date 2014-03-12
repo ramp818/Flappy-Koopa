@@ -65,6 +65,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         inicio=false;
         bArriba= new LinkedList();
         bAbajo= new LinkedList();
+        space= new LinkedList();
         
         //Se cargan imagenes
         
@@ -121,8 +122,8 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         for (int j = 600; j < 2800; j += 270){
             int i = (int)(Math.random() * (-200) + (-50));
             bArriba.add(new Planta(j, i, animBarra));
-            bArriba.add(new Planta(j,i+400,animEspacio));
-            bArriba.add(new Planta(j, i+550, animBarra));  
+            space.add(new Planta(j,i+400,animEspacio));
+            bAbajo.add(new Planta(j, i+550, animBarra));  
         }  
    }
     
@@ -190,6 +191,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
                 gameOver=true;
             }
             
+            
         }
         
         /**
@@ -235,7 +237,11 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
             
             for (int i = 0; i < bArriba.size(); i++) {
                 barraArriba = (Planta) (bArriba.get(i));
+                espacio = (Planta) (space.get(i));
+                barraAbajo = (Planta) (bAbajo.get(i));
                 g.drawImage(barraArriba.getAnimacion().getImagen(), barraArriba.getPosX(), barraArriba.getPosY(), this);
+                g.drawImage(espacio.getAnimacion().getImagen(), espacio.getPosX(), espacio.getPosY(), this);
+                g.drawImage(barraAbajo.getAnimacion().getImagen(), barraAbajo.getPosX(), barraAbajo.getPosY(), this);
                 
             }
             
