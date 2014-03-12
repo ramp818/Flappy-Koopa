@@ -30,6 +30,9 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
     private int gravedad;
     private int contBoton;
     private int nivel;
+    private int MAX;
+    private int MIN;
+    private int distancia;
     //Se declaran variables tipo long
     private long tiempoActual;
     private long tiempoInicial;
@@ -63,6 +66,9 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
        
         //Se inicializan variables
         score=0;
+        MAX=-50;
+        MIN=-200;
+        distancia=270;
         toca=false;
         nivel=1;
         velKoopaX=0;
@@ -128,8 +134,8 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
         //Empieza el hilo
         th.start();
     
-        for (int j = 600; j < 10000; j += 270){
-            int i = (int)(Math.random() * (-200) + (-50));
+        for (int j = 600; j < 3300; j += distancia){
+            int i = (int)(Math.random() * (MIN) + (MAX));
             bArriba.add(new Planta(j, i, animBarra));
             space.add(new Planta(j,i+400,animEspacio));
             bAbajo.add(new Planta(j, i+550, animBarra));  
@@ -192,16 +198,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
                     espacio.setPosX(espacio.getPosX() - velBarra);
   
                 }
-                //Niveles
-                if(score==15){
-                    velBarra=velBarra+3;
-                    nivel=2;
-                }
-                if(score==30){
-                    velBarra=velBarra+6;
-                    nivel=3;
-                }
-            
+                  
             }
            
             
@@ -227,6 +224,19 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseL
                 if (espacio.getPosX()+espacio.getAncho() <= koopa.getPosX() + koopa.getAncho() && !espacio.getPaso()){
                     espacio.setPaso(true);
                     score++;
+                    if(score!=0 && score%10==0){
+                    velBarra=velBarra+3;
+                    nivel++;
+                    MAX-=15;
+                    MIN+=15;
+                    distancia-=30;
+                    for (int j = 600; j < 3300; j += distancia){
+                        int n = (int)(Math.random() * (MIN) + (MAX));
+                        bArriba.add(new Planta(j, n, animBarra));
+                        space.add(new Planta(j,n+400,animEspacio));
+                        bAbajo.add(new Planta(j, n+550, animBarra));  
+                    } 
+                }
                     break;
                 } 
                     
