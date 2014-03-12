@@ -166,13 +166,13 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 koopa.getAnimacion().actualiza(tiempoTranscurrido);
             
                 //movimiento pajaro
-                if(!boton){
+                if(boton){
                 
-                    koopa.setPosY(koopa.getPosY() + (gravedad * velKoopaY));
+                    koopa.setPosY(koopa.getPosY() - (gravedad * velKoopaY));
                 } 
                 else{
                 
-                    koopa.setPosY(koopa.getPosY() - (gravedad * velKoopaY));
+                    koopa.setPosY(koopa.getPosY() + (gravedad * velKoopaY));
                 } 
                 koopa.setPosX(koopa.getPosX() + velKoopaX);
                 
