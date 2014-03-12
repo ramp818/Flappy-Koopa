@@ -34,6 +34,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
     //Se declaran variables tipo Planta
     private Planta barraArriba;
     private Planta barraAbajo;
+    private Planta espacio;
     //Se declaran variables tipo Animacion
     private Animacion animKoopa;
     private Animacion animBarra;
@@ -49,6 +50,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
     //Se declaran variables Linked list
     private LinkedList bArriba;
     private LinkedList bAbajo;
+    private LinkedList space;
     
     
     
@@ -117,8 +119,10 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         th.start();
     
         for (int j = 600; j < 2400; j += 200){
-            int i = (int)(Math.random() * (-200) + 0);
+            int i = (int)(Math.random() * (-200) + (-50));
             bArriba.add(new Planta(j, i, animBarra));
+            
+            bAbajo.add(new Planta(j, i+455, animBarra));  
         }  
    }
     
@@ -232,13 +236,17 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
             }
             
             if(koopa != null){
-                
                 g.drawImage(koopa.getAnimacion().getImagen(), koopa.getPosX(), koopa.getPosY(), this);
             }
             
             for (int i = 0; i < bArriba.size(); i++) {
                 barraArriba = (Planta) (bArriba.get(i));
-                    g.drawImage(barraArriba.getAnimacion().getImagen(), barraArriba.getPosX(), barraArriba.getPosY(), this);
+                barraAbajo = (Planta) (bAbajo.get(i));
+               
+                g.drawImage(barraArriba.getAnimacion().getImagen(), barraArriba.getPosX(), barraArriba.getPosY(), this);
+                
+                g.drawImage(barraAbajo.getAnimacion().getImagen(), barraAbajo.getPosX(), barraAbajo.getPosY(), this);
+                
             }
             
             if(pausa){
