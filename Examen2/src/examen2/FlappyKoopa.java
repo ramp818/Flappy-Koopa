@@ -17,6 +17,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
     private Image background;
     private Image ImagenGameOver;
     private Image ImagenPausa;
+    private Image nivel1;
     //Se declaran variables tipo Graphics
     private Graphics dbg;
     //Se declaran variables tipo int
@@ -66,6 +67,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         
         background = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/fondo.png"));
         ImagenPausa= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pausa.gif"));
+        nivel1= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Level1.gif")); 
         
         // Carga personaje bueno
         Image Koopa1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k0.gif"));
@@ -89,7 +91,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         animKoopa.sumaCuadro(Koopa8,100);
         animKoopa.sumaCuadro(Koopa9,100);
         
-        koopa=new Pajaro(600,300,animKoopa);
+        koopa=new Pajaro(100,300,animKoopa);
         
         //Carga plantas
         Image planta0 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/p0.gif"));
@@ -221,6 +223,11 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         public void paint1(Graphics g){
             
             g.drawImage(background, 0, 0, this);
+            
+            if(!inicio){
+                
+               g.drawImage(nivel1, 450, 250, this); 
+            }
             
             if(koopa != null){
                 
