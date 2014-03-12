@@ -68,6 +68,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
         
         background = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/fondo.png"));
         ImagenPausa= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pausa.gif"));
+        ImagenGameOver= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/GameOver.gif"));
         nivel1= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Level1.gif")); 
         
         // Carga personaje bueno
@@ -128,7 +129,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
             tiempoActual = System.currentTimeMillis();
             while (true) {
                 if (!pausa && inicio && !gameOver) {
-                    //checaColision();
+                    checaColision();
                     actualiza();
             }
                 repaint();
@@ -176,6 +177,11 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
 	 */
         
         public void checaColision(){
+            
+            if(koopa.getPosY() + koopa.getAlto() > getHeight()-79){
+                
+                gameOver=true;
+            }
             
         }
         
@@ -228,6 +234,10 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
             if(pausa){
                 
                 g.drawImage(ImagenPausa, 450, 250, this);
+            }
+            if(gameOver){
+                
+                g.drawImage(ImagenGameOver, 450, 250, this);
             }
         }
         
