@@ -209,11 +209,15 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
 	 */
         
         public void checaColision(){
-            
+            //Colision de koopa con la parte inferior de la pantalla
             if(koopa.getPosY() + koopa.getAlto() > getHeight()-79){
                 gameOver=true;
             }
-            // Colision de la pelota con los bloques
+            //Colision de koopa con la parte superior de la pantalla
+            if(koopa.getPosY() <= 0){
+                gameOver=true;
+            }
+            // Colision de koopa con los bloques
             for (int i = 0; i < space.size(); i++) {
                  espacio = (Planta) (space.get(i));
                 if (espacio.getPosX()+espacio.getAncho() <= koopa.getPosX() + koopa.getAncho() && !espacio.getPaso()){
@@ -224,12 +228,14 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                     
                 
             }
+            //Colision de koopa con los bloques superiores
             for (int i = 0; i < bArriba.size(); i++) {
                  barraArriba = (Planta) (bArriba.get(i));
                 if (koopa.intersecta(barraArriba)) {
                      gameOver=true;
                 }
             }
+            //Colision de koopa con los bloques superiores
             for (int i = 0; i < bAbajo.size(); i++) {
                  barraArriba = (Planta) (bAbajo.get(i));
                 if (koopa.intersecta(barraArriba)) {
