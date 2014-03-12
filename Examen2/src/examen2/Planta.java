@@ -9,9 +9,17 @@ public class Planta extends Base{
 	 * @param posY es el <code>posiscion en y</code> del objeto Planta.
 	 * @param image es la <code>animacion</code> del objeto Planta.
 	 */
+    private boolean paso;
     
     public Planta(int posX,int posY,Animacion image){
 		super(posX,posY,image);
 	}
     
+    public boolean getPaso(){
+        return paso;
+    }
+    
+    public void setPaso(boolean P){
+        paso=P;
+    }
 }

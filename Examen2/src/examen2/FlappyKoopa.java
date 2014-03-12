@@ -216,10 +216,13 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
             // Colision de la pelota con los bloques
             for (int i = 0; i < space.size(); i++) {
                  espacio = (Planta) (space.get(i));
-                if (koopa.intersecta(espacio)) { 
-                    toca=true;
-                    score+=1;
-                }else toca=false;
+                if (espacio.getPosX()+espacio.getAncho() <= koopa.getPosX() + koopa.getAncho() && !espacio.getPaso()){
+                    espacio.setPaso(true);
+                    score++;
+                    break;
+                } 
+                    
+                
             }
             for (int i = 0; i < bArriba.size(); i++) {
                  barraArriba = (Planta) (bArriba.get(i));
