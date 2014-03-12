@@ -8,8 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
-public class FlappyKoopa extends JFrame implements Runnable, KeyListener
-{
+public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
     private static final long serialVersionUID = 1L;
     //Se declaran las variables.
     //Se declaran variables tipo Image
@@ -194,7 +193,13 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
             if(koopa.getPosY() + koopa.getAlto() > getHeight()-79){
                 gameOver=true;
             }
-            
+            // Colision de la pelota con los bloques
+            for (int i = 0; i < space.size(); i++) {
+                 espacio = (Planta) (space.get(i));
+                if (koopa.intersecta(espacio)) {
+                     score++;
+                }
+            }
             
         }
         
@@ -251,7 +256,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
             
             if(!inicio){
                 
-               g.drawImage(nivel1, 450, 250, this); 
+               g.drawImage(nivel1, 250, 250, this); 
             }
             
             if(pausa){
@@ -283,6 +288,11 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
        else if (e.getKeyCode() == KeyEvent.VK_P){
                 
             pausa=!pausa;
+       }
+       else if (e.getKeyCode() == KeyEvent.VK_R){
+        FlappyKoopa juego= new FlappyKoopa();
+        juego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	juego.setVisible(true);
        }
     }
 
