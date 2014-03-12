@@ -71,9 +71,9 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
         //Se cargan imagenes
         
         background = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/fondo.png"));
-        ImagenPausa= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pausa.gif"));
-        ImagenGameOver= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/GameOver.gif"));
-        nivel1= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/Level1.gif")); 
+        ImagenPausa= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/pausa1.gif"));
+        ImagenGameOver= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/GameOver1.gif"));
+        nivel1= Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/nivel1.gif")); 
         
         // Carga personaje bueno
         Image Koopa1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("images/k0.gif"));
@@ -120,7 +120,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
         //Empieza el hilo
         th.start();
     
-        for (int j = 600; j < 2800; j += 270){
+        for (int j = 600; j < 10000; j += 270){
             int i = (int)(Math.random() * (-200) + (-50));
             bArriba.add(new Planta(j, i, animBarra));
             space.add(new Planta(j,i+400,animEspacio));
@@ -267,7 +267,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
             
             if(!inicio){
                 
-               g.drawImage(nivel1, 250, 250, this); 
+               g.drawImage(nivel1, 450, 250, this); 
             }
             
             if(pausa){
