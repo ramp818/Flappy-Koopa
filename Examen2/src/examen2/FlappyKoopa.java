@@ -6,9 +6,12 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
+public class FlappyKoopa extends JFrame implements Runnable, KeyListener ,MouseListener
+{
     private static final long serialVersionUID = 1L;
     //Se declaran las variables.
     //Se declaran variables tipo Image
@@ -119,6 +122,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
         //Caracteristicas JFrame
         setSize(1200,600);
         addKeyListener(this);
+        addMouseListener(this);
         
         Thread th = new Thread(this);
         //Empieza el hilo
@@ -322,7 +326,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
     public void keyPressed(KeyEvent e) {
        
        inicio=true; 
-       if (e.getKeyCode() == KeyEvent.VK_UP) {    //Presiono flecha arriba
+       if (e.getKeyCode() == KeyEvent.VK_SPACE) {    //Presiono flecha arriba
             boton=true;
             salto.play();
        } 
@@ -362,6 +366,54 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
     public void keyReleased(KeyEvent e) {
         
         boton=false;
+    }
+    
+       /**
+	 * Metodo <I>mouseClicked</I> sobrescrito de la interface <code>MouseListener</code>.<P>
+	 * En este metodo maneja el evento que se genera al presionar el mouse.
+	 * @param e es el <code>evento</code> generado al presionar el mouse.
+	 */
+	public void mouseClicked(MouseEvent e) {
+              
+        }
+    
+        /**
+	 * Metodo <I>mouseEntered</I> sobrescrito de la interface <code>MouseListener</code>.<P>
+	 * En este metodo maneja el evento que se genera cuando el cursor entra en un componente
+	 * @param e es el <code>evento</code> que se genera al entrar al area del objeto.
+	 */
+    public void mouseEntered(MouseEvent e){
+    	
+    }
+    
+    /**
+	 * Metodo <I>mouseExited</I> sobrescrito de la interface <code>MouseListener</code>.<P>
+	 * En este metodo maneja el evento que se genera al abandonar el area del objeto seleccionado con el cursor;
+	 * @param e es el <code>evento</code> que se genera en al soltar las teclas.
+	 */
+    public void mouseExited(MouseEvent e){
+    	
+    }
+    
+    /**
+	 * Metodo <I>mousePressed</I> sobrescrito de la interface <code>MouseListener</code>.<P>
+	 * En este metodo maneja el evento que se genera al presionar con el cursor el componente
+	 * @param e es el <code>evento</code> que se genera en al soltar las teclas.
+	 */
+    public void mousePressed(MouseEvent e){
+        
+        inicio=true;
+        boton=true;
+        salto.play();
+    }
+    
+    /**
+	 * Metodo <I>mouseReleased</I> sobrescrito de la interface <code>MouseListener</code>.<P>
+	 * En este metodo maneja el evento que se genera al soltar el boton del mouse.
+	 * @param e es el <code>evento</code> que se genera al soltar el boton del mouse
+	 */
+    public void mouseReleased(MouseEvent e){
+    	
     }
 }
 
