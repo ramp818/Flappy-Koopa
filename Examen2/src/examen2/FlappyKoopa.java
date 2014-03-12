@@ -176,7 +176,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 } 
                 koopa.setPosX(koopa.getPosX() + velKoopaX);
                 
-                
+                if(score==15){
+                    velBarra=velBarra+3;
+                }
+                if(score==30){
+                    velBarra=velBarra+6;
+                }
                 //Movimiento de las barras
                 for (int i = 0; i < bArriba.size() ; i++) {
                     barraArriba = (Planta) bArriba.get(i);
@@ -204,11 +209,23 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
             if(koopa.getPosY() + koopa.getAlto() > getHeight()-79){
                 gameOver=true;
             }
-            // Colision de la pelota con los bloques
+            // Colision de koopa con los bloques
             for (int i = 0; i < space.size(); i++) {
                  espacio = (Planta) (space.get(i));
                 if (koopa.intersecta(espacio)) {
-                     score++;
+                     score+=1;
+                }
+            }
+            for (int i = 0; i < bArriba.size(); i++) {
+                 barraArriba = (Planta) (bArriba.get(i));
+                if (koopa.intersecta(barraArriba)) {
+                     gameOver=true;
+                }
+            }
+            for (int i = 0; i < bAbajo.size(); i++) {
+                 barraArriba = (Planta) (bAbajo.get(i));
+                if (koopa.intersecta(barraArriba)) {
+                     gameOver=true;
                 }
             }
             
@@ -264,7 +281,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 g.drawImage(barraAbajo.getAnimacion().getImagen(), barraAbajo.getPosX(), barraAbajo.getPosY(), this);
                 
             }
-            
+            g.drawString("Tu score es: " + score, 200 , 50);
             if(!inicio){
                 
                g.drawImage(nivel1, 450, 250, this); 
