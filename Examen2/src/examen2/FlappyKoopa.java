@@ -24,6 +24,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
     private int score;
     private int velKoopaX;
     private int velKoopaY;
+    private int velBarra;
     private int gravedad;
     private int contBoton;
     //Se declaran variables tipo long
@@ -174,6 +175,9 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener
                     koopa.setPosY(koopa.getPosY() - (gravedad * velKoopaY));
                 } 
                 koopa.setPosX(koopa.getPosX() + velKoopaX);
+                
+                //Movimiento de las barras
+                
             
             }
            
