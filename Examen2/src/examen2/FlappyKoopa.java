@@ -178,12 +178,12 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 
                 
                 //Movimiento de las barras
-                for (int z = 0; z < 6 ; z++) {
-                    Planta barraAb = (Planta) bArriba.get(z);
-                    Planta barraAr = (Planta) bAbajo.get(z);
-                    Planta espacio = (Planta) space.get(z);
-                    barraAb.setPosX(barraAb.getPosX() - velBarra);
-                    barraAr.setPosX(barraAr.getPosX() - velBarra);
+                for (int i = 0; i < bArriba.size() ; i++) {
+                    barraArriba = (Planta) bArriba.get(i);
+                    barraAbajo = (Planta) bAbajo.get(i);
+                    espacio = (Planta) space.get(i);
+                    barraArriba.setPosX(barraArriba.getPosX() - velBarra);
+                    barraAbajo.setPosX(barraAbajo.getPosX() - velBarra);
                     espacio.setPosX(espacio.getPosX() - velBarra);
   
                 }
