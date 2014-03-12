@@ -60,6 +60,7 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
         score=0;
         velKoopaX=0;
         velKoopaY=5;
+        velBarra=6;
         gravedad=2;
         boton=false;
         inicio=false;
@@ -175,7 +176,17 @@ public class FlappyKoopa extends JFrame implements Runnable, KeyListener{
                 } 
                 koopa.setPosX(koopa.getPosX() + velKoopaX);
                 
+                
                 //Movimiento de las barras
+                for (int z = 0; z < 6 ; z++) {
+                    Planta barraAb = (Planta) bArriba.get(z);
+                    Planta barraAr = (Planta) bAbajo.get(z);
+                    Planta espacio = (Planta) space.get(z);
+                    barraAb.setPosX(barraAb.getPosX() - velBarra);
+                    barraAr.setPosX(barraAr.getPosX() - velBarra);
+                    espacio.setPosX(espacio.getPosX() - velBarra);
+  
+                }
                 
             
             }
